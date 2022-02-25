@@ -61,5 +61,6 @@ class User(AbstractUser):
     phone = models.CharField(max_length=15, unique=True)
 
     USERNAME_FIELD = 'phone'
+    username = None
 
     objects = MyUserManager()

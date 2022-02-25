@@ -12,7 +12,7 @@ class UserCreationForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ('phone' )
+		fields = ('phone' ,)
 
 	def clean_password2(self):
 		cd = self.cleaned_data
