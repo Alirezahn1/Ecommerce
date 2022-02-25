@@ -16,3 +16,8 @@ class Order(BaseModel):
 
     class Meta:
         unique_together = [['off_code', 'customer']]
+
+class Orderitem(BaseModel):
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT)
+    order = models.ForeignKey(Order, on_delete=models.RESTRICT)
+    amount = models.PositiveIntegerField()
