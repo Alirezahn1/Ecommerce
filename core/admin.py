@@ -1,9 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
+from customers.models import Customer
 from .forms import UserCreationForm, UserChangeForm
 from .models import User
 
 
+class CustomerAdmin(admin.StackedInline):
+	model = Customer
 
 class UserAdmin(BaseUserAdmin):
 	form = UserChangeForm
@@ -17,7 +21,7 @@ class UserAdmin(BaseUserAdmin):
 	)
 	add_fieldsets = (
 		('Main', {
-			'fields':('first_name','last_name', 'email','phone', 'password1', 'password2','is_staff','is_superuser')
+			'fields':('first_name','last_name', 'email','phone', 'password1', 'password2','is_staff')
 		}),
 	)
 	search_fields = ('email','phone','first_name','last_name',)
