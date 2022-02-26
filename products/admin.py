@@ -5,9 +5,10 @@ admin.site.register(Discount)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-	list_display = ('name', 'slug')
+	list_display = ('name', 'slug','is_sub','sub_category')
 	prepopulated_fields = {'slug': ('name',)}
-
+	list_filter = ('is_sub',)
+	search_fields = ('name',)
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ('name', 'price', 'available')
@@ -16,7 +17,7 @@ class ProductAdmin(admin.ModelAdmin):
 	prepopulated_fields = {'slug': ('name',)}
 	raw_id_fields = ('category',)
 	actions = ('make_available',)
-
+	search_fields = ('name','category','description',)
 	def make_available(self, request, queryset):
 		rows = queryset.update(available=True)
 		self.message_user(request, f'{rows} updated')

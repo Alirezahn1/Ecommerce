@@ -1,6 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
-{% block title %}contact us{% endblock %}
+{% block title %}products{% endblock %}
   <!-- about section -->
 {% block content %}
 
@@ -13,12 +13,12 @@
           Our Products
         </h2>
       </div>
-             {% for category in categories %}
+        {% for category in categories %}
 
         <div class="btn-group">
             <a href="{{ category.get_absolute_url }}" class="btn btn-primary">{{ category.name }}</a>
-            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu">
+            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sub</button>
+            <div class="dropdown-menu" >
                 {% for sub in category.scategory.all %}
                     <a class="dropdown-item" href="{{ sub.get_absolute_url }}">{{ sub.name }}</a>
                 {% endfor %}
@@ -30,9 +30,10 @@
 
 
         {% for product in products %}
-      <div class="row">
-        <div class="col-sm-6 col-lg-4">
-          <div class="box">
+
+      <div class="row" style="display: inline-block">
+        <div class="col-sm-12 col-lg-12"  >
+          <div class="box" >
             <div class="img-box">
               <img src="{{ product.image.url }}" alt="{{ product.name }}">
               <a href="" class="add_cart_btn">
@@ -42,9 +43,10 @@
               </a>
             </div>
             <div class="detail-box">
-              <h5>
+              <a href="{{ product.get_absolute_url }}">
                   {{ product.name}}
-              </h5>
+              </a>
+                <br>
               <div class="product_info">
                 <h5>
                   <span>$</span> {{ product.price }}
@@ -60,11 +62,11 @@
             </div>
           </div>
         </div>
-
       </div>
+                {% endfor %}
     </div>
   </section>
-{% endfor %}
+
   <!-- end product section -->
 
 {% endblock %}

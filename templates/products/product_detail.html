@@ -1,10 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% block title %} product detail {% endblock %}
 
 {% block content %}
-    <h3>{{ product.name }}</h3>
-    <small>{{ product.created }}</small><p>{{ product.price }} $</p><br/>
+   <section class="product_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          {{ product.name }}
+        </h2>
+      </div>
+
     <img src="{{ product.image.url }}" alt="" width="400px" height="400px">
+        <h4> Available in the inventory :  <b>{{ product.available}}</b> </h4> <br>
+    <h4>Price : {{ product.price }} $</h4><br/>
+    <h4>{{ product.description }}</h4><br/><br/>
+
+        </div>
+        </div>
+   </section>
 {#    <form action="{% url 'cart:cart_add' product.id %}" method="post">#}
 {#        {% csrf_token %}#}
 {#        {{ form }}#}

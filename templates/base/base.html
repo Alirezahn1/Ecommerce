@@ -18,6 +18,8 @@
 
 
   <!-- bootstrap core css -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}" >
 
   <!-- fonts style -->
@@ -95,19 +97,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'product:home' %}">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{% url 'products:home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'product:about' %}"> About</a>
+                  <a class="nav-link" href="{% url 'products:about' %}"> About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'product:product' %}">Products</a>
+                  <a class="nav-link" href="{% url 'products:product' %}">Products</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'product:why' %}">Why Us</a>
+                  <a class="nav-link" href="{% url 'products:why' %}">Why Us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'product:contact_us' %}">contact us</a>
+                  <a class="nav-link" href="{% url 'products:contact_us' %}">contact us</a>
                 </li>
               </ul>
             </div>
@@ -165,27 +167,27 @@
             </h5>
             <ul>
               <li>
-                <a href="{% url 'product:home' %}">
+                <a href="{% url 'products:home' %}">
                   Home
                 </a>
               </li>
               <li>
-                <a href="{% url 'product:about' %}">
+                <a href="{% url 'products:about' %}">
                   About
                 </a>
               </li>
               <li>
-                <a href="{% url 'product:product' %}">
+                <a href="{% url 'products:product' %}">
                   Products
                 </a>
               </li>
               <li>
-                <a href="{% url 'product:why' %}">
+                <a href="{% url 'products:why' %}">
                   Why Us
                 </a>
               </li>
               <li>
-                <a href="{% url 'product:contact_us' %}">
+                <a href="{% url 'products:contact_us' %}">
                   contact us
                 </a>
               </li>
@@ -231,18 +233,20 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <b >Alirezahn1</b>
+        <b >SADAF SHOP</b>
       </p>
     </div>
   </footer>
   <!-- footer section -->
 
   <!-- jQery -->
-  <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static 'js/jquery-3.4.1.min.js'%}"></script>
   <!-- bootstrap js -->
-  <script src="{% static 'js/bootstrap.js'%}"></script>
+{#      <script src="{% static 'js/bootstrap.js'%}"></script>#}
   <!-- custom js -->
-  <script src="{% static 'js/custom.js'%}"></script>
+      <script src="{% static 'js/custom.js'%}"></script>
 
   </div>
 </body>
