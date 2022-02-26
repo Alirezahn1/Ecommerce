@@ -1,15 +1,21 @@
 from django.shortcuts import render, get_object_or_404
+from django.views import View
+
 from .models import *
 
-def home(request):
-    return render(request,'base/home.html',{})
-def about(request):
-    return render(request,'base/about.html',{})
+class HomeView(View):
+    def get(self,request):
+        return render(request,'base/home.html',{})
+class AboutView(View):
+    def get(self,request):
+        return render(request,'base/about.html',{})
 
-def why(request):
-    return render(request,'base/why.html',{})
-def contact_us(request):
-    return render(request, 'base/contact_us.html', {})
+class WhyView(View):
+    def get(self,request):
+        return render(request,'base/why.html',{})
+class ContactUsView(View):
+    def get(self,request):
+        return render(request, 'base/contact_us.html', {})
 
 
 def product(request,slug=None):
