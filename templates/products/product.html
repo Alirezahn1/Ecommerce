@@ -6,13 +6,14 @@
 
   <!-- product section -->
 
-  <section class="product_section layout_padding">
+  <section class="product_section layout_padding" id="product">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
           Our Products
         </h2>
       </div>
+    <a class="btn btn-primary" href="{% url 'products:product' %} " role="button">All Category</a><br> <br>
         {% for category in categories %}
 
         <div class="btn-group">
