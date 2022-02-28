@@ -8,6 +8,9 @@ from core.models import User, BaseModel
 class Customer(BaseModel):
     user = models.OneToOneField(User, models.CASCADE)
 
+    def __str__(self):
+        return self.user.phone
+
 class Address(BaseModel):
     customer = models.ForeignKey(Customer,on_delete=models.SET_NULL,null=True,blank=True)
     city = models.CharField(max_length=200)
