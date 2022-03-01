@@ -1,12 +1,16 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+
 from core.models import User
 # Create your views here.
 from django.views import View
 from django.contrib import messages
-from core.forms import UserCreationForm, UserLoginForm
+from core.forms import UserCreationForm, UserLoginForm, UserChangeForm
 
 from customers.models import Customer
 
@@ -71,6 +75,13 @@ class UserLogoutView(LoginRequiredMixin,View):
         messages.success(request, 'you logged out successfully', 'success')
         return redirect('products:home')
 
+from django.views import generic
 
-def profile():
-    pass
+class UserEditView(LoginRequiredMixin,generic.UpdateView):
+    form_class = UserChangeForm
+    template_name = 'customer/profile.html'
+    success_url = reverse_lazy('products:home')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
