@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 
 def check_phone(value):
-    patter1 = re.compile(r'^(\+989|09)(\d{9})$')
+    patter1 = re.compile("^9\d{9}$")
     patter2 = re.compile("^09\d{9}$")
     patter3 = re.compile("^00989\d{9}$")
     patter4 = re.compile("^\+989\d{9}$")
