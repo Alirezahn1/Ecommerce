@@ -39,11 +39,14 @@ class UserCreationForm(forms.ModelForm):
 		return user
 
 class UserChangeForm(forms.ModelForm):
-	password = ReadOnlyPasswordHashField(help_text='you can change this form using <a href=\"../password/\">this form </a>')
+	# password = ReadOnlyPasswordHashField(help_text='you can change password using <a href=\"../password/\">this form </a>')
 
 	class Meta:
 		model = User
-		fields = ('phone', 'password' )
+		fields = ('first_name','last_name','phone','email','password')
+		widgets = {
+			'password': forms.TextInput(attrs={'type': 'password'})
+		}
 
 	def clean_password(self):
 		return self.initial['password']
