@@ -12,16 +12,16 @@ class CustomerAdmin(admin.StackedInline):
 class UserAdmin(BaseUserAdmin):
 	form = UserChangeForm
 	add_form = UserCreationForm
-	list_display = ('date_joined', 'email','phone', 'is_staff','is_superuser')
+	list_display = ('first_name','last_name', 'email','phone', 'is_staff','is_superuser')
 	list_filter = ('is_staff','is_active','is_superuser')
 	fieldsets = (
 		('Main', {'fields':('first_name','last_name','email','phone', 'password')}),
 		('Personal info', {'fields':('is_active','date_joined',)}),
-		('Permissions', {'fields':('is_staff','is_superuser',)})
+		('Permissions', {'fields':('is_staff','is_superuser','groups')})
 	)
 	add_fieldsets = (
 		('Main', {
-			'fields':('first_name','last_name', 'email','phone', 'password1', 'password2','is_staff')
+			'fields':('first_name','last_name', 'email','phone', 'password1', 'password2')
 		}),
 	)
 	search_fields = ('email','phone','first_name','last_name',)
