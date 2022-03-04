@@ -10,7 +10,7 @@ class OffCode(AbstractDiscount):
 
 
 class Order(BaseModel):
-    customer = models.ForeignKey(Customer,on_delete=models.RESTRICT)
+    customer = models.ForeignKey(Customer,on_delete=models.RESTRICT,related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.RESTRICT)
     off_code = models.ForeignKey(OffCode, on_delete=models.SET_NULL, null=True, blank=True)
 

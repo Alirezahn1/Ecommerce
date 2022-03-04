@@ -26,8 +26,8 @@ class AbstractDiscount(BaseModel):
 
 
 class Discount(AbstractDiscount):
-	pass
-
+	def __str__(self):
+		return f'{self.type} , {self.value}'
 
 class Category(BaseModel):
 	sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='scategory', null=True, blank=True)
@@ -55,7 +55,7 @@ class Product(BaseModel):
 	description = models.TextField()
 	price = models.IntegerField()
 	available = models.BooleanField(default=True)
-	discount = models.OneToOneField(Discount,on_delete=models.CASCADE,null=True,blank=True)
+	discount = models.ForeignKey(to=Discount, on_delete=models.SET_NULL, null=True,blank=True)
 
 	class Meta:
 		ordering = ('name',)
@@ -65,3 +65,9 @@ class Product(BaseModel):
 
 	def get_absolute_url(self):
 		return reverse('products:product_detail', args=[self.slug,])
+
+	def final_price(self):
+		if self.discount.type == 'percent':
+			return int(self.price - ((self.discount.value/100)*self.price))
+		else:
+			return self.price - self.discount.value
