@@ -26,11 +26,10 @@ class AbstractDiscount(BaseModel):
 
 
 class Discount(AbstractDiscount):
-    pass
+	pass
 
 
-
-class Category(models.Model):
+class Category(BaseModel):
 	sub_category = models.ForeignKey('self', on_delete=models.CASCADE, related_name='scategory', null=True, blank=True)
 	is_sub = models.BooleanField(default=False)
 	name = models.CharField(max_length=200)
@@ -48,7 +47,7 @@ class Category(models.Model):
 		return reverse('products:category_filter', args=[self.slug,])
 
 
-class Product(models.Model):
+class Product(BaseModel):
 	category = models.ManyToManyField(Category, related_name='products')
 	name =  models.CharField(max_length=200)
 	slug = models.SlugField(max_length=200, unique=True)
@@ -56,8 +55,7 @@ class Product(models.Model):
 	description = models.TextField()
 	price = models.IntegerField()
 	available = models.BooleanField(default=True)
-	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
+	discount = models.OneToOneField(Discount,on_delete=models.CASCADE,null=True,blank=True)
 
 	class Meta:
 		ordering = ('name',)
