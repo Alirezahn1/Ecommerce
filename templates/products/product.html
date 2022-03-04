@@ -36,7 +36,7 @@
         <div class="col-sm-12 col-lg-12"  >
           <div class="box" >
             <div class="img-box">
-              <img src="{{ product.image.url }}" alt="{{ product.name }}">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 250px;width: 250px">
               <a href="" class="add_cart_btn">
                 <span>
                   Add To Cart
@@ -50,7 +50,13 @@
                 <br>
               <div class="product_info">
                 <h5>
-                  <span>$</span> {{ product.price }}
+
+                    {% if product.discount %}
+                    <del>$ {{ product.price }}</del> <br>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price }}</ins>
+                    {% else %}
+                         <span>${{ product.price }}</span>
+                    {% endif %}
                 </h5>
                 <div class="star_container">
                   <i class="fa fa-star" aria-hidden="true"></i>
