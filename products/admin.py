@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 # Register your models here.
-admin.site.register(Discount)
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 	list_display = ('name', 'price', 'available')
-	list_filter = ('available', 'created')
+	list_filter = ('available',)
 	list_editable = ('price',)
 	prepopulated_fields = {'slug': ('name',)}
 	raw_id_fields = ('category',)
@@ -22,3 +22,9 @@ class ProductAdmin(admin.ModelAdmin):
 		rows = queryset.update(available=True)
 		self.message_user(request, f'{rows} updated')
 	make_available.short_description = 'make all available'
+
+@admin.register(Discount)
+class DiscountAdmin(admin.ModelAdmin):
+	list_display = ('value', 'type','max_price')
+	list_filter = ('type',)
+	search_fields = ('value',)
