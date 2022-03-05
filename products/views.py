@@ -29,6 +29,9 @@ class ProductView(View):
         if slug:
             category = get_object_or_404(Category, slug=slug)
             products = products.filter(category=category)
+            paginator = Paginator(products, 3)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
 
         return render(request,'products/product.html',{'products': products, 'categories': categories,'page_obj': page_obj})
 
