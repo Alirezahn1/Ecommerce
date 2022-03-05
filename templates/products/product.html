@@ -1,6 +1,10 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}products{% endblock %}
+{% block style %}.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}{% endblock %}
   <!-- about section -->
 {% block content %}
 
@@ -27,10 +31,10 @@
         </div>
     {% endfor %}
 
-     <br><br> <br> <br><br> <br> <br><br> <br>
+     <br> <br><br> <br> <br><br> <br>
 
 
-        {% for product in products %}
+        {% for product in page_obj %}
 
       <div class="row" style="display: inline-block">
         <div class="col-sm-12 col-lg-12"  >
@@ -71,6 +75,31 @@
         </div>
       </div>
                 {% endfor %}
+    <br> <br> <br> <br>
+    {% if page_obj.has_other_pages %}
+    <div style="display: table;margin: 0 auto">
+  <ul class="pagination" >
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}" style="color: black;float: left;padding: 8px 16px;text-decoration: none;">&laquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black;float: left;padding: 8px 16px;text-decoration: none;"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active" style=";float: left;padding: 8px 16px;text-decoration: none; background-color: #4CAF50;
+    color: white; border-radius: 5px;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}" style="color: black;float: left; padding: 8px 16px;text-decoration: none;">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}" style="color: black; float: left; padding: 8px 16px;text-decoration: none;">&raquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black; float: left; padding: 8px 16px;text-decoration: none"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
     </div>
   </section>
 
