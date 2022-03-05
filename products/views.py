@@ -1,12 +1,12 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-
 from .models import *
 
 class HomeView(View):
     def get(self,request):
-        return render(request,'base/home.html',{})
+        products = Product.objects.filter(available=True).exclude(discount=None)
+        return render(request,'base/home.html',{'products': products})
 class AboutView(View):
     def get(self,request):
         return render(request,'base/about.html',{})
