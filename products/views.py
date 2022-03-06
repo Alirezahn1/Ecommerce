@@ -6,7 +6,9 @@ from .models import *
 class HomeView(View):
     def get(self,request):
         products = Product.objects.filter(available=True).exclude(discount=None)
-        return render(request,'base/home.html',{'products': products})
+        new_products= Product.objects.all().order_by('id').reverse()[:6]
+        print(new_products)
+        return render(request,'base/home.html',{'products': products,'new_products':new_products})
 class AboutView(View):
     def get(self,request):
         return render(request,'base/about.html',{})
