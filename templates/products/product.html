@@ -34,13 +34,13 @@
      <br> <br><br> <br> <br><br> <br>
 
 
-        {% for product in page_obj %}
 
-      <div class="row" style="display: inline-block">
-        <div class="col-sm-12 col-lg-12"  >
-          <div class="box" >
+<div class="row">
+          {% for product in page_obj %}
+        <div class="col-sm-6 col-lg-4">
+          <div class="box">
             <div class="img-box">
-              <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 250px;width: 250px">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}">
               <a href="" class="add_cart_btn">
                 <span>
                   Add To Cart
@@ -48,13 +48,11 @@
               </a>
             </div>
             <div class="detail-box">
-              <a href="{{ product.get_absolute_url }}">
+               <a href="{{ product.get_absolute_url }}">
                   {{ product.name}}
               </a>
-                <br>
               <div class="product_info">
                 <h5>
-
                     {% if product.discount %}
                     <del>$ {{ product.price }}</del> <br>
                         <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price }}</ins>
@@ -73,8 +71,8 @@
             </div>
           </div>
         </div>
-      </div>
-                {% endfor %}
+          {% endfor %}
+</div>
     <br> <br> <br> <br>
     {% if page_obj.has_other_pages %}
     <div style="display: table;margin: 0 auto">
