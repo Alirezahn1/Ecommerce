@@ -70,6 +70,8 @@ class UserLoginView(View):
 
 
 class UserLogoutView(LoginRequiredMixin,View):
+    login_url = '/login/'
+    redirect_field_name = 'login'
     def get(self,request):
         logout(request)
         messages.success(request, 'you logged out successfully', 'success')
@@ -78,6 +80,8 @@ class UserLogoutView(LoginRequiredMixin,View):
 from django.views import generic
 
 class UserEditView(LoginRequiredMixin,generic.UpdateView):
+    login_url = '/login/'
+    redirect_field_name = 'login'
     form_class = UserChangeForm
     template_name = 'customer/profile.html'
     success_url = reverse_lazy('products:home')
