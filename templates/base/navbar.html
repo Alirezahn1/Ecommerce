@@ -16,7 +16,7 @@
                 </span>
               </a>
             </div>
-            <form class="search_form">
+            <form class="search_form" method="post" action="{% url 'products:search' %}">
               <input type="text" class="form-control" placeholder="Search here...">
               <button class="" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>

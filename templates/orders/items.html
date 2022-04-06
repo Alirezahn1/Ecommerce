@@ -1,0 +1,86 @@
+{% extends 'base/base.html' %}
+{% block title %}cart {% endblock %}
+{% block style %}
+        .loading {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text {
+            font-size: 72px;
+            text-align: center;
+
+        }
+
+        .blur-bg {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.26);
+            filter: blur(2px);
+        }
+{% endblock %}
+{% block content %}
+<div class="loading" style="display: none">
+    <div class="text"><i class="gb gb_replay gb_animate_spin"></i></div>
+</div>
+    <h1></h1>
+<center>
+    {% for item in items %}
+        <div item-id="{{ item.id }}">{{ item.product.name }} | <input type="number" name="quantity"
+                                                                      value="{{ item.quantity }}" min="1"> | <a
+                style="color: red ; cursor: pointer" class="delete-key">Delete</a>
+            <hr>
+        </div>
+
+    {% endfor %}
+</center>
+<script>
+    $(document).ajaxStart(function () {
+        $('center').attr('class', 'blur-bg')
+        $('.loading').fadeIn()
+    })
+    $(document).ajaxStop(function () {
+        $('center').attr('class', '')
+        $('.loading').fadeOut()
+    })
+    $('input[name=quantity]').on('change', function () {
+        let count = $(this).val()
+        let item_id = $(this).parent().attr('item-id')
+
+        $.ajax({
+            method: 'PATCH',
+            url: "{% url 'orders:order_item' 0 %}".replace('0', item_id),
+            data: {
+                'quantity': count
+            },
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+    })
+
+    $('a[class=delete-key]').on('click', function () {
+        let parent = $(this).parent()
+        let item_id = parent.attr('item-id')
+        $.ajax({
+            type: 'DELETE',
+            url: "{% url 'orders:order_item' 0 %}".replace('0', item_id),
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function () {
+                parent.remove()
+            }
+        })
+    })
+</script>
+{% endblock %}

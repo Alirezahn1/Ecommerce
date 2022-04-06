@@ -41,14 +41,14 @@
           <div class="box">
             <div class="img-box">
               <img src="{{ product.image.url }}" alt="{{ product.name }}">
-              <a href="" class="add_cart_btn">
+              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart" >
                 <span>
                   Add To Cart
                 </span>
-              </a>
+              </button>
             </div>
             <div class="detail-box">
-               <a href="{{ product.get_absolute_url }}">
+               <a  href="{{ product.get_absolute_url }}" >
                   {{ product.name}}
               </a>
               <div class="product_info">

@@ -58,7 +58,7 @@ class Product(BaseModel):
 	discount = models.ForeignKey(to=Discount, on_delete=models.SET_NULL, null=True,blank=True)
 
 	class Meta:
-		ordering = ('name',)
+		ordering = ('-created',)
 
 	def __str__(self):
 		return self.name
