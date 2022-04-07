@@ -55,17 +55,19 @@ class UserLoginView(View):
                 user = authenticate(request, phone=cd['phone'], password=cd['password'])
                 if user is not None:
                     login(request, user)
-                    messages.success(request, 'you logged in successfully', 'success')
+                    messages.success(request, 'You logged in successfully', 'success')
                     return redirect('products:home')
                 else:
 
                     messages.error(request, 'phone or password is wrong', 'danger')
                     return redirect('customers:login')
     def get(self,request):
-
-        form = UserLoginForm()
-
-        return render(request, 'customer/login.html', {'form': form})
+        if request.user.is_authenticated:
+            messages.warning(request,'You are already logged in !!')
+            return redirect('products:home')
+        else:
+            form = UserLoginForm()
+            return render(request, 'customer/login.html', {'form': form})
 
 
 
