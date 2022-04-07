@@ -10,19 +10,29 @@
            {% endfor %}
        {% endfor %}
     {% endif %}
-    <div class="container-fluid" style="margin: 30px;text-align: center">
-    <div class="row justify-content-center">
-    <div class="col-lg-6 col-sm-4 col-md-6" style="float: none; margin: 0 auto;">
-        <div class="form-group-lg">
-    <h1 >Login page</h1> <br>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <div class="container">
+        <div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="">
+        <div class="card mt-3 shadow">
+            <div class="card-body">
+                 <form action="" method="post" enctype="multipart/form-data">
+                                         {% csrf_token %}
+                     <div class="text-center">
+                <h4>Login </h4>
+                     </div> <hr>
+        <div class="form-group">
+
         {{ form.as_p }}
-        <br><input type="submit" class="btn btn-primary" value="Login">
-    </form> <br>
+        <br> <button type="submit"  class="btn btn-primary float-right shadow px-4"> Login </button>
+     <br> <br> <hr>
     <h5 style="text-align: center;text-transform: capitalize">Don't have an account?<a href="{% url 'customers:register' %}">Register</a></h5>
         </div>
+            </form>
+            </div>
+        </div>
+        </div>
     </div>
-    </div>
+        </div>
     </div>
 {% endblock %}
