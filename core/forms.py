@@ -14,10 +14,10 @@ class UserCreationForm(forms.ModelForm):
 		model = User
 		fields = ('phone','email','first_name','last_name')
 		widgets = {
-			'email': forms.EmailInput(attrs={'class': 'email form-control','placeholder':'Enter your Email'}),
-			'phone' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your phone'}),
-			'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your first name'}),
-			'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your last name'}),
+			'email': forms.EmailInput(attrs={'class': 'email form-control my-2','placeholder':'Enter your Email'}),
+			'phone' : forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder ': 'Enter your phone'}),
+			'first_name': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Enter your first name'}),
+			'last_name': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Enter your last name'}),
 		}
 
 	def clean_password2(self):
@@ -52,8 +52,8 @@ class UserChangeForm(forms.ModelForm):
 		return self.initial['password']
 
 class UserLoginForm(forms.Form):
-	phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Enter your phone'}))
-	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Enter your password'}))
+	phone = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control my-3','placeholder':'Enter your phone'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control my-3','placeholder':'Enter your password'}))
 	# class Meta:
 	# 	model = User
 	# 	fields = ('phone','password')
