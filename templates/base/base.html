@@ -37,6 +37,8 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
     <style>{% block style %}{% endblock %}</style>
 
+
+
 </head>
 
 <body>
@@ -67,7 +69,7 @@
   <script>
   alertify.set('notifier','position', 'top-right');
       {% for msg in messages %}
-          alertify.success('{{ msg }}');
+          alertify.notify('{{ msg }}',7);
       {% endfor %}
 
 

@@ -20,17 +20,6 @@ class UserRegisterView(View):
         if request.method == 'POST':
             form = UserCreationForm(request.POST)
             if form.is_valid():
-                # cd = form.cleaned_data
-                # email= cd['email']
-                # phone= cd['phone']
-                # first_name= cd['first_name']
-                # password1= cd['password1']
-                # last_name= cd['last_name']
-                # password2= cd['password2']
-                #
-                # user = User.objects.create(email=email,phone=phone, first_name=first_name, last_name=last_name,password=password1)
-                # user.save()
-
                 user = form.save(commit=False)
                 user.save()
                 customer = Customer.objects.create(user=user)

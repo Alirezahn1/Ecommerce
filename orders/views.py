@@ -1,20 +1,36 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from .models import Orderitem
+
+from products.models import Product
+from .models import OrderItem
 
 
 # Create your views here.
 
 
-class OrderItemDetailView(ListView):
-    template_name = 'orders/items.html'
-    model = Orderitem
-    context_object_name = 'items'
 
-    def get_queryset(self):
-        return Orderitem.objects.filter(order__customer__user=self.request.user)
+def addtocart(request):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            prod_id = int(request.POST.get('product_id'))
+            product_check = Product.objects.get(id=prod_id)
+            if product_check:
+                if (Cart.objects.filter(user=request.user.id,product_id=prod_id)):
+                    return JsonResponse({'status': "Product already in cart"})
+                else:
+                    prod_qty=int(request.POST.get('product_qty'))
+
+                    if product_check.quantity >= prod_qty :
+                        Cart.objects.create(user=request.user,product_id=prod_id,product_qty=prod_qty)
+                        return JsonResponse({'status': "product added successfully"})
+                    else:
+                        return JsonResponse({'status': "Only"+ str(product_check.quantity) + "quantity available"})
+            else:
+                return JsonResponse({'status':"No such product found"})
 
 
-# def updateItem(request):
-#     return JsonResponse('it was added',safe=False)
+        else:
+            return JsonResponse({'status':"login to continue"})
+
+    return redirect('products:home')

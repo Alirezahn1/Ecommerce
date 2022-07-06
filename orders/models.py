@@ -3,7 +3,7 @@ from core.models import BaseModel
 # Create your models here.
 from customers.models import Customer, Address
 from products.models import Product, AbstractDiscount
-
+from core.models import User
 
 class OffCode(AbstractDiscount):
     code = models.CharField(max_length=15, unique=True)
@@ -30,7 +30,7 @@ class Order(BaseModel):
     #         return int(total - discount_price)
     #     return total
 
-class Orderitem(BaseModel):
+class OrderItem(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     order = models.ForeignKey(Order, on_delete=models.RESTRICT)
     amount = models.PositiveIntegerField()
@@ -40,3 +40,7 @@ class Orderitem(BaseModel):
 
     def get_cost(self):
         return self.product.price * self.amount
+
+class Cart(BaseModel):
+    user = models.ForeignKey(User,on_delete=models.RESTRICT)
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT)

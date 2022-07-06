@@ -1,9 +1,9 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from rest_framework.response import Response
-
+from django.contrib import messages
 from .models import *
 from orders.forms import CartAddForm
 from rest_framework.decorators import api_view
@@ -31,13 +31,13 @@ class ProductView(View):
 	def get(self,request,slug=None):
 		products = Product.objects.filter(available=True)
 		categories = Category.objects.filter(is_sub=False)
-		paginator = Paginator(products, 3)
+		paginator = Paginator(products, 6)
 		page_number = request.GET.get('page')
 		page_obj = paginator.get_page(page_number)
 		if slug:
 			category = get_object_or_404(Category, slug=slug)
 			products = products.filter(category=category)
-			paginator = Paginator(products, 3)
+			paginator = Paginator(products, 6)
 			page_number = request.GET.get('page')
 			page_obj = paginator.get_page(page_number)
 
@@ -45,11 +45,29 @@ class ProductView(View):
 
 
 
-class ProductDetailView(View):
-	def get(self,request,slug):
-		product = get_object_or_404(Product, slug=slug)
-		form = CartAddForm()
-		return render(request, 'products/product_detail.html', {'product':product,'form':form})
+# class ProductDetailView(View):
+# 	def get(self,request,slug):
+# 		product = get_object_or_404(Product, slug=slug)
+# 		form = CartAddForm()
+# 		return render(request, 'products/product_detail.html', {'product':product,'form':form})
+
+def productview(request,prod_slug):
+
+	if (Product.objects.filter(slug=prod_slug)):
+		product = Product.objects.filter(slug=prod_slug).first
+		context = {'product':product}
+
+
+
+	else:
+		messages.error(request, 'no such product found')
+		return redirect('products:product')
+
+
+
+	return render(request,'products/product_detail.html',context)
+
+
 
 @api_view(['POST'])
 def search(request):

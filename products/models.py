@@ -56,6 +56,11 @@ class Product(BaseModel):
 	price = models.IntegerField()
 	available = models.BooleanField(default=True)
 	discount = models.ForeignKey(to=Discount, on_delete=models.SET_NULL, null=True,blank=True)
+	quantity = models.IntegerField(null=False,blank=False)
+	tag = models.CharField(max_length=200,null=True,blank=True)
+	trending = models.BooleanField(default=False,help_text='1 = Trending')
+
+
 
 	class Meta:
 		ordering = ('-created',)

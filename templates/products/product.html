@@ -38,7 +38,7 @@
 <div class="row">
           {% for product in page_obj %}
         <div class="col-sm-6 col-lg-4">
-          <div class="box">
+          <div class="box product_data" style="background-color: #e8ece8">
             <div class="img-box">
               <img src="{{ product.image.url }}" alt="{{ product.name }}">
               <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart" >
@@ -48,16 +48,16 @@
               </button>
             </div>
             <div class="detail-box">
-               <a  href="{{ product.get_absolute_url }}" >
+               <a  href="{% url 'products:product_detail' product.slug  %}" >
                   {{ product.name}}
-              </a>
+              </a> <br>
               <div class="product_info">
                 <h5>
                     {% if product.discount %}
-                    <del>$ {{ product.price }}</del> <br>
-                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price }}</ins>
+                    <del>$ {{ product.price | stringformat:'d' }}</del>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price | stringformat:'d' }}</ins>
                     {% else %}
-                         <span>${{ product.price }}</span>
+                         <span>${{ product.price | stringformat:'d' }}</span>
                     {% endif %}
                 </h5>
                 <div class="star_container">

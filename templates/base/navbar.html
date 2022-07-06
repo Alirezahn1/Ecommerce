@@ -1,15 +1,18 @@
+    <style> a:hover {
+        color: orange;
+    } </style>
     <header class="header_section">
       <div class="header_top">
         <div class="container-fluid">
           <div class="top_nav_container">
             <div class="contact_nav">
-              <a href="">
+              <a href="{% url 'products:contact_us' %}">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
                   Call : 09376051315
                 </span>
               </a>
-              <a href="">
+              <a href="{% url 'products:contact_us' %}">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
                   Email : Alirezahn1@yahoo.com
@@ -32,7 +35,7 @@
           <a class="dropdown-item" href="{% url 'customers:profile' %}">Profile</a>
           <a class="dropdown-item" href="#">Orders</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'customers:login' %}">Logout</a>
+          <a class="dropdown-item" href="{% url 'customers:logout' %}">Logout</a>
         </div>
       </div>
 
@@ -48,7 +51,7 @@
                 {% if request.user.is_superuser or request.user.is_staff %}
                 <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin Panel</a>
                 {% endif %}
-              <a href="{% url 'orders:cart' %}" class="cart-link">
+              <a href="" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart
@@ -62,11 +65,11 @@
       <div class="header_bottom">
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="home.html">
+            <h1 class="navbar-brand" href="home.html">
               <span>
                SADAF SHOP
               </span>
-            </a>
+            </h1>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class=""> </span>
@@ -74,14 +77,14 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
-                <li class="nav-item active">
-                  <a class="nav-link" id="home" href="{% url 'products:home' %}">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item ">
+                  <a class="nav-link" id="home" href="{% url 'products:home' %}" >Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="about" href="{% url 'products:about' %}"> About</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link"id="products" href="{% url 'products:product' %}">Products</a>
+                  <a class="nav-link" id="products" href="{% url 'products:product' %}">Products</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" id="why" href="{% url 'products:why' %}">Why Us</a>

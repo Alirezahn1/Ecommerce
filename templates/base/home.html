@@ -41,8 +41,8 @@
                     <h1>
                         {{ product.name}}
                     </h1>
-                     <del>$ {{ product.price }}</del>
-                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price }}</ins>
+                     <del>$ {{ product.price | stringformat:'d' }}</del>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price| stringformat:'d'}}</ins>
                       <div style="width: 500px; text-overflow: ellipsis; white-space: nowrap;
                         overflow: hidden;">{{product.description }}</div>
                     <a href="{{ product.get_absolute_url }}">
