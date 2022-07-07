@@ -42,5 +42,6 @@ class OrderItem(BaseModel):
         return self.product.price * self.amount
 
 class Cart(BaseModel):
-    user = models.ForeignKey(User,on_delete=models.RESTRICT)
-    product = models.ForeignKey(Product, on_delete=models.RESTRICT)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_qty = models.IntegerField(null=False,blank=False)
