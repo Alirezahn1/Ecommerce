@@ -51,7 +51,7 @@
                 {% if request.user.is_superuser or request.user.is_staff %}
                 <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin Panel</a>
                 {% endif %}
-              <a href="" class="cart-link">
+              <a href="{% url 'orders:cart' %}" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart

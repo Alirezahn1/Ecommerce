@@ -1,39 +1,60 @@
 {% extends 'base/base.html' %}
-{% block title %}cart {% endblock %}
+{% block title %}Cart {% endblock %}
 
 {% block content %}
-    <br>
-<table class="table table-dark table-striped">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit Price</th>
-        <th scope="col">Total Price</th>
-        <th scope="col">Remove</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for item in cart %}
-    <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ item.product }}</td>
-        <td>{{ item.amount }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.total_price }}</td>
-{#        <td><a href="{% url 'orders:cart_remove' item.product.id %}">remove</a></td>#}
-    </tr>
-    {% endfor %}
 
-    <tr>
-        <td>Total</td>
-        <td colspan="4"></td>
-        <td>{{ cart.get_total_price }}</td>
-    </tr>
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card shadow ">
+                        <div class="card-body">
+                            {% if cart %}
+                                {% for item in cart %}
+                                <div class="row product_data">
+                                    <div class="col-md-2 my-auto">
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" height="70px" width="70px">
+                                    </div>
+                                    <div class="col-md-3 my-auto">
+                                        <h6>{{ item.product.name }}</h6>
+                                    </div>
+                                    <div class="col-md-2 my-auto">
+                                        <h6> $ {{ item.product.price }}</h6>
+                                    </div>
+                                    <div class="col-md-3 my-auto">
+                                        <input type="hidden" class="prod_id" value="{{ item.product_id }}">
+                                        {% csrf_token %}
+                                        {% if item.product.quantity >= item.product_qty %}
+                                            <label for="Quantity">Quantity</label>
+                                            <div class="input-group text-center mb-3" style="width: 130px;">
+                                            <button class="input-group-text changeQuantity decrement-btn">-</button>
+                                            <input type="text" name="quantity" class="form-control qty-input text-center" value={{ item.product_qty }}>
+                                            <button class="input-group-text  changeQuantity increment-btn">+</button>
+                                    </div>
+                                            {% else %}
+                                            <h6> Out of Stock</h6>
+                                            {% endif %}
+                                </div>
+                                    <div class="col-md-2 my-auto">
+                                    <button class="btn btn-danger delete-cart-item"><i class="fa fa-trash"></i> Remove</button>
+                                    </div>
+                                </div>
 
-    </tbody>
-</table>
+                            {% endfor %}
+                            {% else %}
+                            <h4> Your cart is empty</h4>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
 

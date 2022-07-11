@@ -35,3 +35,7 @@ def addtocart(request):
 
     return redirect('products:home')
 
+def viewcart(request):
+    cart = Cart.objects.filter(user=request.user)
+    context = {'cart':cart}
+    return render(request,'orders/cart.html',context)
