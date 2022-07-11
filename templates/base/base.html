@@ -69,7 +69,7 @@
   <script>
   alertify.set('notifier','position', 'top-right');
       {% for msg in messages %}
-          alertify.notify('{{ msg }}',7);
+          alertify.success('{{ msg }}',5);
       {% endfor %}
 
 
