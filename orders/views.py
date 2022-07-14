@@ -39,3 +39,15 @@ def viewcart(request):
     cart = Cart.objects.filter(user=request.user)
     context = {'cart':cart}
     return render(request,'orders/cart.html',context)
+
+@csrf_exempt
+def updatecart(request):
+    if request.method == 'POST':
+        prod_id = int(request.POST.get('product_id'))
+        if Cart.objects.filter(user=request.user,product_id=prod_id):
+            prod_qty = int(request.POST.get('product_qty'))
+            cart = Cart.objects.get(product_id=prod_id,user=request.user)
+            cart.product_qty = prod_qty
+            cart.save()
+            return JsonResponse({'status':"Updated Successfully"})
+    return redirect('products:home')
