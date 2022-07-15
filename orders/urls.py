@@ -12,4 +12,7 @@ urlpatterns = [
     path('cart/', viewcart, name='cart'),
     path('update-cart/',updatecart,name='updatecart'),
     path('delete-cart-item/',deletecartitem,name='deletecartitem'),
+    path('add-to-wishlist/', addtowishlist, name='addtowishlist'),
+    path('wishlist', wishlistview, name='wishlist'),
+    path('delete-wishlist-item/',deletewishlistitem,name='deletewishlistitem'),
 ]

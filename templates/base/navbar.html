@@ -19,7 +19,7 @@
                 </span>
               </a>
             </div>
-            <form class="search_form" method="post" action="{% url 'products:search' %}">
+            <form class="search_form" method="post" action="">
               <input type="text" class="form-control" placeholder="Search here...">
               <button class="" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>
@@ -55,6 +55,12 @@
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart
+                </span>
+              </a>
+                          <a href="{% url 'orders:wishlist' %}" class="cart-link">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <span>
+                  Whislist
                 </span>
               </a>
             </div>

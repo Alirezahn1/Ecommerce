@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from core.models import BaseModel
+from core.models import *
 # Create your models here.
 
 class AbstractDiscount(BaseModel):
@@ -76,3 +76,7 @@ class Product(BaseModel):
 			return int(self.price - ((self.discount.value/100)*self.price))
 		else:
 			return self.price - self.discount.value
+
+class Wishlist(BaseModel):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	product = models.ForeignKey(Product,on_delete=models.CASCADE)

@@ -35,13 +35,15 @@
 
 
 
-<div class="row">
+<div class="row cartdata">
           {% for product in page_obj %}
+              {% csrf_token %}
+                <input type="hidden" value="{{ product.id }}" class="prod_id">
         <div class="col-sm-6 col-lg-4">
           <div class="box product_data" style="background-color: #e8ece8">
             <div class="img-box">
               <img src="{{ product.image.url }}" alt="{{ product.name }}">
-              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart" >
+              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart addToCartBtn" >
                 <span>
                   Add To Cart
                 </span>

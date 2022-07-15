@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from rest_framework.response import Response
@@ -8,7 +9,9 @@ from .models import *
 from orders.forms import CartAddForm
 from rest_framework.decorators import api_view
 from .serializers import *
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
 
 class HomeView(View):
 	def get(self,request):
@@ -69,12 +72,9 @@ def productview(request,prod_slug):
 
 
 
-@api_view(['POST'])
-def search(request):
-	query = request.data.get('query','')
-	if query:
-		products = Product.objects.filter(Q(name__icontains=query) | Q(description__icontain=query))
-		serializer = ProductSerializer(products,many=True)
-		return Response(serializer.data)
-	else:
-		return Response({"products":[]})
+
+
+
+
+
+
