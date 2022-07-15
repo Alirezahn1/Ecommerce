@@ -19,7 +19,7 @@
                                         <a href="{% url 'products:product_detail' item.product.slug  %}">{{ item.product.name }}</a>
                                     </div>
                                     <div class="col-md-2 my-auto">
-                                        <h6> $ {{ item.product.price }}</h6>
+                                        <h6>{% if item.product.discount %}{{ item.product.final_price | stringformat:'d' }} {% else %}$ {{ item.product.price }}{% endif %} </h6>
                                     </div>
                                     <div class="col-md-3 my-auto">
                                         <input type="hidden" class="prod_id" value="{{ item.product_id }}">
@@ -41,6 +41,7 @@
                                 </div>
 
                             {% endfor %}
+                                <a href="{% url 'orders:checkout' %}" class="btn btn-outline-success float-right"> Checkout</a>
                             {% else %}
                             <h4> Your cart is empty</h4>
                             {% endif %}

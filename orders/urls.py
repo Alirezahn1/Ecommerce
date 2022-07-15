@@ -15,4 +15,5 @@ urlpatterns = [
     path('add-to-wishlist/', addtowishlist, name='addtowishlist'),
     path('wishlist', wishlistview, name='wishlist'),
     path('delete-wishlist-item/',deletewishlistitem,name='deletewishlistitem'),
+    path('checkout', checkout, name='checkout'),
 ]

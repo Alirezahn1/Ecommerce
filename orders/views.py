@@ -110,3 +110,21 @@ def deletewishlistitem(request):
         else:
             return JsonResponse({'status': "login to Continue"})
     return redirect('products:home')
+
+def checkout(request):
+    rawcart = Cart.objects.filter(user=request.user)
+    for item in rawcart:
+        if item.product_qty > item.product.quantity:
+            Cart.objects.delete(id=item.id)
+
+    cartitems = Cart.objects.filter(user=request.user)
+    total_price = 0
+    for item in cartitems:
+        if item.product.discount:
+            total_price = total_price + item.product.final_price() * item.product_qty
+        else:
+            total_price = total_price + item.product.price * item.product_qty
+
+
+    context = {'cartitems':cartitems,'total_price':total_price}
+    return render(request,'orders/checkout.html',context)
