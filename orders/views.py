@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -111,6 +111,7 @@ def deletewishlistitem(request):
             return JsonResponse({'status': "login to Continue"})
     return redirect('products:home')
 
+@login_required(login_url='customers:login')
 def checkout(request):
     rawcart = Cart.objects.filter(user=request.user)
     for item in rawcart:
@@ -128,3 +129,41 @@ def checkout(request):
 
     context = {'cartitems':cartitems,'total_price':total_price}
     return render(request,'orders/checkout.html',context)
+
+@login_required(login_url='customers:login')
+@csrf_exempt
+def placeorder(request):
+    if request.method == 'POST':
+        neworder = Order()
+        customer = Customer.objects.create(user=request.user)
+        neworder.customer = customer
+        newaddress =Address.objects.create(customer=customer,city=request.POST.get('city'),province=request.POST.get('province')
+                                           ,description=request.POST.get('address'),home_plate=request.POST.get('plate')
+                                           ,postal_code=request.POST.get('code'))
+        neworder.address = newaddress
+        cart = Cart.objects.filter(user=request.user)
+        total_price = 0
+        for item in cart:
+            if item.product.discount:
+                total_price = total_price + item.product.final_price() * item.product_qty
+            else:
+                total_price = total_price + item.product.price * item.product_qty
+
+        neworder.total_price = total_price
+        neworder.paid = True
+        neworder.save()
+        neworderitem = Cart.objects.filter(user=request.user)
+        for item in neworderitem :
+            OrderItem.objects.create(
+                order=neworder,
+                product=item.product,
+                quantity=item.product_qty
+            )
+            orderproduct = Product.objects.filter(id=item.product_id).first()
+            orderproduct.quantity = orderproduct.quantity - item.product_qty
+            orderproduct.save()
+
+        Cart.objects.filter(user=request.user).delete()
+        messages.success(request, 'your order has been placed successfully')
+
+    return redirect('products:home')

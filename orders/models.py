@@ -14,6 +14,7 @@ class Order(BaseModel):
     address = models.ForeignKey(Address, on_delete=models.RESTRICT)
     off_code = models.ForeignKey(OffCode, on_delete=models.SET_NULL, null=True, blank=True)
     paid = models.BooleanField(default=False)
+    total_price = models.IntegerField(null=True)
 
 
     class Meta:
@@ -33,13 +34,13 @@ class Order(BaseModel):
 class OrderItem(BaseModel):
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     order = models.ForeignKey(Order, on_delete=models.RESTRICT)
-    amount = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return str(self.id)
 
     def get_cost(self):
-        return self.product.price * self.amount
+        return self.product.price * self.quantity
 
 class Cart(BaseModel):
     user = models.ForeignKey(User,on_delete=models.CASCADE)

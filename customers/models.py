@@ -6,7 +6,7 @@ from core.models import User, BaseModel
 
 
 class Customer(BaseModel):
-    user = models.OneToOneField(User, models.CASCADE)
+    user = models.OneToOneField(User, models.CASCADE,primary_key=True )
 
     def __str__(self):
         return self.user.phone
