@@ -135,7 +135,7 @@ def checkout(request):
 def placeorder(request):
     if request.method == 'POST':
         neworder = Order()
-        customer = Customer.objects.create(user=request.user)
+        customer = Customer.objects.get(user=request.user)
         neworder.customer = customer
         newaddress =Address.objects.create(customer=customer,city=request.POST.get('city'),province=request.POST.get('province')
                                            ,description=request.POST.get('address'),home_plate=request.POST.get('plate')
@@ -167,3 +167,17 @@ def placeorder(request):
         messages.success(request, 'your order has been placed successfully')
 
     return redirect('products:home')
+
+
+def myorders(request):
+    customers = Customer.objects.get(user=request.user)
+    orders = Order.objects.filter(customer=customers)
+    context = {'orders': orders}
+    return render(request,'orders/myorders.html',context)
+
+def orderview(request,pk):
+    customer = Customer.objects.get(user=request.user)
+    order = Order.objects.filter(customer=customer).filter(id=pk).first()
+    orderitems = OrderItem.objects.filter(order=order)
+    context = {'order':order,'orderitems':orderitems}
+    return render(request,'orders/view.html',context)

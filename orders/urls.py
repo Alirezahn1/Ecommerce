@@ -17,4 +17,6 @@ urlpatterns = [
     path('delete-wishlist-item/',deletewishlistitem,name='deletewishlistitem'),
     path('checkout', checkout, name='checkout'),
     path('place-order', placeorder, name='placeorder'),
+    path('my-orders', myorders, name='myorders'),
+    path('orderview/<str:pk>/', orderview, name='orderview'),
 ]
