@@ -35,19 +35,24 @@
 
 
 
-<div class="row cartdata">
+<div class="row cartdata product_data ">
           {% for product in page_obj %}
-              {% csrf_token %}
-                <input type="hidden" value="{{ product.id }}" class="prod_id">
-        <div class="col-sm-6 col-lg-4">
-          <div class="box product_data" style="background-color: #e8ece8">
+
+        <div class="col-sm-6 col-lg-4 ">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" class="prod_id">
+            <input type="hidden" name="quantity" class="form-control qty-input text-center"  value="1">
+          <div class="box" style="background-color: #e8ece8">
+
             <div class="img-box">
               <img src="{{ product.image.url }}" alt="{{ product.name }}">
-              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart addToCartBtn" >
-                <span>
+                {% if product.quantity > 0 %}
+              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart addToCartBtn " >
                   Add To Cart
-                </span>
               </button>
+                {% else %}
+                <buttopn type="button" data-action="add" class="btn btn-danger float-start disabled add_cart_btn update-cart ">Out of stock </buttopn>
+                {% endif %}
             </div>
             <div class="detail-box">
                <a  href="{% url 'products:product_detail' product.slug  %}" >

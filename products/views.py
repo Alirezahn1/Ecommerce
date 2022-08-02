@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_protect
 class HomeView(View):
 	def get(self,request):
 		products = Product.objects.filter(available=True).exclude(discount=None)
-		new_products= Product.objects.all().order_by('id').reverse()[:6]
+		new_products= Product.objects.filter(trending=True)
 		return render(request,'base/home.html',{'products': products,'new_products':new_products})
 class AboutView(View):
 	def get(self,request):
