@@ -35,6 +35,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <!-- Default theme -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <style>{% block style %}{% endblock %}</style>
 
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -75,8 +76,28 @@
   <!-- bootstrap js -->
       <script src="{% static 'js/bootstrap.js'%}"></script>
   <!-- custom js -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+      var availableTags = [];
 
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+       $.ajax({
+            method : 'GET',
+            url : '/product-list/',
+            success: function (response){
+
+                startauto(response)
+
+            }
+        })
+
+      function startauto(availableTags){
+
+      $( "#searchproducts" ).autocomplete({
+      source: availableTags
+    });
+       }
+  </script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
   <script>
   alertify.set('notifier','position', 'top-right');

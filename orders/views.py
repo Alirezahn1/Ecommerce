@@ -92,9 +92,9 @@ def addtowishlist(request):
 
 @login_required(login_url='customers:login')
 def wishlistview(request):
-	wishlist = Wishlist.objects.filter(user=request.user)
-	context ={'wishlist':wishlist}
-	return render(request,'products/wishlist.html',context)
+    wishlist = Wishlist.objects.filter(user=request.user)
+    context ={'wishlist':wishlist}
+    return render(request,'products/wishlist.html',context)
 
 @csrf_exempt
 def deletewishlistitem(request):
@@ -181,3 +181,25 @@ def orderview(request,pk):
     orderitems = OrderItem.objects.filter(order=order)
     context = {'order':order,'orderitems':orderitems}
     return render(request,'orders/view.html',context)
+
+def productlist(request):
+    products = Product.objects.filter(available=True).values_list('name',flat=True)
+    productslist = list(products)
+    return JsonResponse(productslist,safe=False)
+
+@csrf_exempt
+def searchproduct(request):
+    if request.method == 'POST':
+        searched = request.POST.get('productsearch')
+        if searched == '':
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            product = Product.objects.filter(name__contains= searched).first()
+            if product:
+                return redirect(product.get_absolute_url())
+            else:
+                messages.info(request,'No product matched your search')
+                return redirect(request.META.get('HTTP_REFERER'))
+
+
+    return redirect(request.META.get('HTTP_REFERER'))

@@ -19,8 +19,9 @@
                 </span>
               </a>
             </div>
-            <form class="search_form" method="post" action="">
-              <input type="text" class="form-control" placeholder="Search here...">
+            <form class="search_form" method="post" action="{% url 'orders:searchproduct' %}">
+                {% csrf_token %}
+              <input type="search" required class="form-control" id="searchproducts" name="productsearch" placeholder="Search product">
               <button class="" type="submit">
                 <i class="fa fa-search" aria-hidden="true"></i>
               </button>

@@ -19,4 +19,6 @@ urlpatterns = [
     path('place-order', placeorder, name='placeorder'),
     path('my-orders', myorders, name='myorders'),
     path('orderview/<str:pk>/', orderview, name='orderview'),
+    path('product-list/', productlist, name='productlist'),
+    path('searchproduct/', searchproduct, name='searchproduct'),
 ]
