@@ -94,7 +94,7 @@
         </h2>
       </div>
       <div class="row cartdata product_data">
-          {% for product in new_products %}
+          {% for product in page_obj %}
         <div class="col-sm-6 col-lg-4">
             {% csrf_token %}
             <input type="hidden" value="{{ product.id }}" class="prod_id">
@@ -136,7 +136,31 @@
         </div>
           {% endfor %}
       </div>
-
+       <br> <br> <br> <br>
+    {% if page_obj.has_other_pages %}
+    <div style="display: table;margin: 0 auto">
+  <ul class="pagination" >
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}" style="color: black;float: left;padding: 8px 16px;text-decoration: none;">&laquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black;float: left;padding: 8px 16px;text-decoration: none;"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active" style=";float: left;padding: 8px 16px;text-decoration: none; background-color: #4CAF50;
+    color: white; border-radius: 5px;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}" style="color: black;float: left; padding: 8px 16px;text-decoration: none;">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}" style="color: black; float: left; padding: 8px 16px;text-decoration: none;">&raquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black; float: left; padding: 8px 16px;text-decoration: none"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
     </div>
   </section>
 
