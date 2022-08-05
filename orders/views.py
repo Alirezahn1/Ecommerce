@@ -1,4 +1,5 @@
-from django.http import JsonResponse, HttpResponse
+from django.core.mail import send_mail, BadHeaderError
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -203,3 +204,21 @@ def searchproduct(request):
 
 
     return redirect(request.META.get('HTTP_REFERER'))
+
+from django.conf import settings
+@csrf_exempt
+def send_email(request):
+    if request.method == 'POST':
+        email = list(request.POST.get('email'))
+        if email:
+            try:
+                # send_mail('Joined Newsletter', 'We will send you our news',settings.EMAIL_HOST_USER , email)
+                messages.info(request, 'Thank you for join!!')
+
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('products:home')
+        else:
+            # In reality we'd use a form class
+            # to get proper validation errors.
+            return redirect('products:home')

@@ -75,7 +75,7 @@
             <h5>
               Newsletter
             </h5>
-            <form action="">
+            <form action="{% url 'orders:sendemail' %}" method="post">
               <input type="email" placeholder="Enter your email" name="email">
               <button>
                 Subscribe

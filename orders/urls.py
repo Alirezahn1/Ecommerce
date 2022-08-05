@@ -21,4 +21,5 @@ urlpatterns = [
     path('orderview/<str:pk>/', orderview, name='orderview'),
     path('product-list/', productlist, name='productlist'),
     path('searchproduct/', searchproduct, name='searchproduct'),
+    path('send-email/', send_email, name='sendemail'),
 ]
