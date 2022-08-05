@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, Contact
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
@@ -39,7 +39,7 @@ class UserCreationForm(forms.ModelForm):
 		return user
 
 class UserChangeForm(forms.ModelForm):
-	# password = ReadOnlyPasswordHashField(help_text='you can change password using <a href=\"../password/\">this form </a>')
+	password = ReadOnlyPasswordHashField(help_text='you can change password using <a href=\"../password/\">this form </a>')
 
 	class Meta:
 		model = User
@@ -57,3 +57,19 @@ class UserLoginForm(forms.Form):
 	# class Meta:
 	# 	model = User
 	# 	fields = ('phone','password')
+
+class ContactForm(forms.Form):
+	first_name = forms.CharField(max_length = 50,widget=forms.TextInput(attrs={'class': 'form-control my-2 required', 'placeholder': 'Enter your first name'}))
+	last_name = forms.CharField(max_length = 50,widget=forms.TextInput(attrs={'class': 'form-control my-2 required', 'placeholder': 'Enter your last name'}))
+	email = forms.EmailField(max_length = 150,widget=forms.EmailInput(attrs={'class': 'email form-control my-2 required','placeholder':'Enter your Email'}))
+	message = forms.CharField(widget = forms.Textarea(attrs={'class': 'form-control my-2 required', 'placeholder ': 'Enter your message'}), max_length = 2000)
+
+	class Meta:
+		model = Contact
+		fields = ('first_name','last_name','email','message')
+		widgets = {
+			'email': forms.EmailInput(attrs={'class': 'email form-control my-2','placeholder':'Enter your Email'}),
+			'message' : forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder ': 'Enter your message'}),
+			'first_name': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Enter your first name'}),
+			'last_name': forms.TextInput(attrs={'class': 'form-control my-2', 'placeholder': 'Enter your last name'}),
+		}

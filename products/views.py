@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from rest_framework.response import Response
@@ -30,7 +30,8 @@ class WhyView(View):
 		return render(request,'base/why.html',{})
 class ContactUsView(View):
 	def get(self,request):
-		return render(request, 'base/contact_us.html', {})
+		form = ContactForm()
+		return render(request, 'base/contact_us.html', {'form': form})
 
 
 class ProductView(View):
@@ -74,7 +75,36 @@ def productview(request,prod_slug):
 	return render(request,'products/product_detail.html',context)
 
 
+from core.forms import ContactForm
+from django.core.mail import send_mail, BadHeaderError
 
+@csrf_exempt
+def contact(request):
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+			# subject = "Website Inquiry"
+			# body = {
+			# 	'first_name': form.cleaned_data['first_name'],
+			# 	'last_name': form.cleaned_data['last_name'],
+			# 	'email': form.cleaned_data['email_address'],
+			# 	'message': form.cleaned_data['message'],
+			# }
+			# message = "\n".join(body.values())
+
+			Contact.objects.create(first_name=form.cleaned_data['first_name'],last_name= form.cleaned_data['last_name']
+											 ,email= form.cleaned_data['email'],message= form.cleaned_data['message'])
+			messages.info(request, 'your message has been sent successfully!!')
+			# try:
+			#
+			# 	# send_mail(subject, message, 'admin@example.com', ['admin@example.com'])
+			# 	messages.info(request, 'your message has been sent!!')
+			# except BadHeaderError:
+			# 	return HttpResponse('Invalid header found.')
+			return redirect("products:home")
+
+	form = ContactForm()
+	return render(request, "base/contact_us.html", {'form': form})
 
 
 

@@ -66,3 +66,10 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.username = self.phone
         super().save(*args, **kwargs)
+
+
+class Contact(BaseModel):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=150)
+    message = models.TextField(max_length=2000)

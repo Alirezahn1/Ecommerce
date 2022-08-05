@@ -3,14 +3,15 @@
 {% block title %}Contact us{% endblock %}
   <!-- about section -->
 {% block content %}
-            <div class="section-header text-center" style="margin-top: 30px;" id="contact">
+            <div class="section-header" style="margin-top: 30px;" id="contact">
+            <div class="text-center">
            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.0756977594074!2d51.3398935851632!3d35.69975478019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8dfe05737fbcc9%3A0x274833de5c05c70c!2z2YXbjNiv2KfZhiDYotiy2KfYr9uM2Iwg2KrZh9ix2KfZhtiMINin24zYsdin2YY!5e0!3m2!1sfa!2s!4v1644267480334!5m2!1sfa!2s"
-                   width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"></iframe> <br>
+                   width="800" height="600" style="border:0;"  allowfullscreen="" loading="lazy" ></iframe> <br></div>
 {#            <div style="text-align: center">#}
-<div class="container" style="text-align: center;alignment: center;align-items: center">
+<div class="container" >
       <div class="row">
         <div class="col-lg-12">
-          <div class="info_contact">
+          <div class="info_contact text-center">
             <h5>
               <a href="" class="navbar-brand">
                 <span>
@@ -34,6 +35,55 @@
         </div>
         </div>
             </div>
+                <div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-3 shadow">
+            <div class="card-body">
+		<h3>Contact us directly if you have any questions or suggestions</h3>
+                <hr>
+		<p>
+			Please write your name, email address and a message below if you have any questions.
+			One of our staff members will be happy to contact you directly and answer your questions as soon as possible.
+		</p>
+		<form method="post">
+        {% csrf_token %}
+             <div class="form-group col-md-6">
+                <label for=""> First Name :</label>
+                {{ form.first_name }}
+                          {% if form.errors.first_name %}
+                <label class="text-danger">{{ form.errors.first_name }}</label>
+                {% endif %}
+             </div>
+            <div class="form-group col-md-6">
+                <label for=""> Last Name :</label>
+                {{ form.last_name }}
+                                {% if form.errors.last_name %}
+                <label class="text-danger">{{ form.errors.last_name }}</label>
+                {% endif %}
+            </div>
+                             <div class="form-group col-md-6">
+                <label for=""> Email :</label>
+                {{ form.email }}
+                         {% if form.errors.email %}
+                <label class="text-danger">{{ form.errors.email }}</label>
+                {% endif %}
+            </div>
+                                  <div class="form-group col-md-12">
+                <label for=""> Message :</label>
+                {{ form.message }}
+                         {% if form.errors.message %}
+                <label class="text-danger">{{ form.errors.message }}</label>
+                {% endif %}
+            </div>
+             <button type="submit"  class="btn btn-primary float-right shadow px-4"> Send </button>
+        </form>
+    </div>
+            </div>
+    </div>
+                </div>
+            </div>
+
+
 
   <!-- end client section -->
 
