@@ -1,9 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from core.models import User
@@ -27,7 +29,7 @@ class UserRegisterView(View):
                 messages.success(request, 'successfully registered', 'success')
                 return redirect('customers:login')
             else:
-                messages.error(request,form.errors,'danger')
+                messages.error(request, 'Please correct the error below.')
                 return redirect('customers:register')
     def get(self,request):
         form = UserCreationForm()
@@ -80,3 +82,18 @@ class UserEditView(LoginRequiredMixin,generic.UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
 
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('products:home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'customer/changepassword.html', {
+        'form': form
+    })
