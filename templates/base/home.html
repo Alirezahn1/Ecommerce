@@ -1,0 +1,394 @@
+{% extends 'base/base.html' %}
+{% load static %}
+    <!-- end header section -->
+    <!-- slider section -->
+{% block title %} Home {% endblock %}
+{% block style %}
+    .whatsapp{
+        position :fixed
+        button: 05% !important;
+        left: 05% !important;
+    }
+{% endblock %}
+{% block content %}
+
+    <section class="slider_section" >
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active ">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1>
+                        Welcome to SADAF SHOP
+                    </h1>
+                    <p>
+                     Here is SADAF SHOP, your number one source for electronic devices. We're dedicated to giving you the very best of product, with a focus on three characteristics: dependability, customer service and uniqueness.
+                    </p>
+                    <a href="{% url 'products:about' %}">
+                      Read More
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="{% static 'images/slider-img.png' %}" alt="" style="height: 500px;width: 500px">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% for product in products %}
+            <div class="carousel-item">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <h1>
+                        {{ product.name}}
+                    </h1>
+                     <del>$ {{ product.price | stringformat:'d' }}</del>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price| stringformat:'d'}}</ins>
+                      <div style="width: 500px; text-overflow: ellipsis; white-space: nowrap;
+                        overflow: hidden;">{{product.description }}</div>
+                    <a href="{{ product.get_absolute_url }}">
+                      Read More
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="img-box">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 500px;width: 500px">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+       <div class="carousel_btn_box" style="margin-bottom: 2rem">
+          <a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- end slider section -->
+
+
+  <!-- product section -->
+
+  <section class="product_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Trending Products
+
+        </h2>
+      </div>
+      <div class="row cartdata product_data">
+          {% for product in page_obj %}
+        <div class="col-sm-6 col-lg-4">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" class="prod_id">
+            <input type="hidden" name="quantity" class="form-control qty-input text-center"  value="1">
+          <div class="box">
+            <div class="img-box">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                              {% if product.quantity > 0 %}
+              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart addToCartBtn " >
+                  Add To Cart
+              </button>
+                {% else %}
+                <buttopn type="button" data-action="add" class="btn btn-danger float-start disabled add_cart_btn update-cart ">Out of stock </buttopn>
+                {% endif %}
+            </div>
+            <div class="detail-box">
+               <a href="{{ product.get_absolute_url }}">
+                  {{ product.name}}
+              </a>
+              <div class="product_info">
+                <h5>
+                    {% if product.discount %}
+                    <del>$ {{ product.price }}</del> <br>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price }}</ins>
+                    {% else %}
+                         <span>${{ product.price }}</span>
+                    {% endif %}
+                </h5>
+                <div class="star_container">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+       <br> <br> <br> <br>
+    {% if page_obj.has_other_pages %}
+    <div style="display: table;margin: 0 auto">
+  <ul class="pagination" >
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}" style="color: black;float: left;padding: 8px 16px;text-decoration: none;">&laquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black;float: left;padding: 8px 16px;text-decoration: none;"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active" style=";float: left;padding: 8px 16px;text-decoration: none; background-color: #4CAF50;
+    color: white; border-radius: 5px;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}" style="color: black;float: left; padding: 8px 16px;text-decoration: none;">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}" style="color: black; float: left; padding: 8px 16px;text-decoration: none;">&raquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black; float: left; padding: 8px 16px;text-decoration: none"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+    </div>
+  </section>
+
+  <!-- end product section -->
+
+  <!-- about section -->
+
+  <section class="about_section">
+    <div class="container-fluid  ">
+      <div class="row">
+        <div class="col-md-5 ml-auto">
+          <div class="detail-box pr-md-3">
+            <div class="heading_container">
+              <h2>
+                We Provide Best For You
+              </h2>
+            </div>
+            <p>
+                Here is SADAF SHOP, your number one source for electronic devices. We're dedicated to giving you the very best of product, with a focus on three characteristics: dependability, customer service and uniqueness.
+                We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact us.
+            </p>
+            <a href="{% url 'products:about' %}">
+              Read More
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 px-0">
+          <div class="img-box">
+            <img src="{% static 'images/about-img.jpg'%}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end about section -->
+
+  <!-- why us section -->
+
+  <section class="why_us_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Why Choose Us
+        </h2>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="box ">
+            <div class="img-box">
+              <img src="{% static 'images/w1.png'%}" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Fast Delivery
+              </h5>
+              <p>
+                variations of passages of Lorem Ipsum available
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box ">
+            <div class="img-box">
+              <img src="{% static 'images/w2.png'%}" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Free Shiping
+              </h5>
+              <p>
+                variations of passages of Lorem Ipsum available
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box ">
+            <div class="img-box">
+              <img src="{% static 'images/w3.png'%}" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Best Quality
+              </h5>
+              <p>
+                variations of passages of Lorem Ipsum available
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end why us section -->
+
+
+  <!-- client section -->
+
+  <section class="client_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          What Says Our Customers
+        </h2>
+      </div>
+    </div>
+    <div class="client_container ">
+      <div id="carouselExample2Controls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container">
+              <div class="box">
+                <div class="detail-box">
+                  <p>
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  </p>
+                  <p>
+                    It is a long established fact that a reader will be distracted by the readable content of a page
+                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
+                    long established fact that a reader will be distracted by the readable content of a page when
+                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                  </p>
+                </div>
+                <div class="client-id">
+                  <div class="img-box">
+                    <img src="{% static 'images/client.jpg'%}" alt="">
+                  </div>
+                  <div class="name">
+                    <h5>
+                      James Dew
+                    </h5>
+                    <h6>
+                      Photographer
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container">
+              <div class="box">
+                <div class="detail-box">
+                  <p>
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  </p>
+                  <p>
+                    It is a long established fact that a reader will be distracted by the readable content of a page
+                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
+                    long established fact that a reader will be distracted by the readable content of a page when
+                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                  </p>
+                </div>
+                <div class="client-id">
+                  <div class="img-box">
+                    <img src="{% static 'images/client.jpg'%}" alt="">
+                  </div>
+                  <div class="name">
+                    <h5>
+                      James Dew
+                    </h5>
+                    <h6>
+                      Photographer
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="container">
+              <div class="box">
+                <div class="detail-box">
+                  <p>
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+                  </p>
+                  <p>
+                    It is a long established fact that a reader will be distracted by the readable content of a page
+                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
+                    long established fact that a reader will be distracted by the readable content of a page when
+                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                  </p>
+                </div>
+                <div class="client-id">
+                  <div class="img-box">
+                    <img src="{% static 'images/client.jpg'%}" alt="">
+                  </div>
+                  <div class="name">
+                    <h5>
+                      James Dew
+                    </h5>
+                    <h6>
+                      Photographer
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel_btn-box" id="about">
+          <a class="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
+            <span>
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExample2Controls" role="button" data-slide="next">
+            <span>
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+    </div>
+
+  <!-- end client section -->
+  <!-- info section -->
+{% endblock %}

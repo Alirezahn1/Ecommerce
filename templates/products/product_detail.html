@@ -1,0 +1,426 @@
+{% extends 'base/base.html' %}
+{% block title %} {{ product.name }} {% endblock %}
+{% block style %}
+{#    body {#}
+{#  font-family: 'open sans';#}
+{#  overflow-x: hidden; }#}
+{##}
+{#img {#}
+{#  max-width: 100%; }#}
+{##}
+{#.preview {#}
+{#  display: -webkit-box;#}
+{#  display: -webkit-flex;#}
+{#  display: -ms-flexbox;#}
+{#  display: flex;#}
+{#  -webkit-box-orient: vertical;#}
+{#  -webkit-box-direction: normal;#}
+{#  -webkit-flex-direction: column;#}
+{#      -ms-flex-direction: column;#}
+{#          flex-direction: column; }#}
+{#  @media screen and (max-width: 996px) {#}
+{#    .preview {#}
+{#      margin-bottom: 20px; } }#}
+{##}
+{#.preview-pic {#}
+{#  -webkit-box-flex: 1;#}
+{#  -webkit-flex-grow: 1;#}
+{#      -ms-flex-positive: 1;#}
+{#          flex-grow: 1; }#}
+{##}
+{#.preview-thumbnail.nav-tabs {#}
+{#  border: none;#}
+{#  margin-top: 15px; }#}
+{#  .preview-thumbnail.nav-tabs li {#}
+{#    width: 18%;#}
+{#    margin-right: 2.5%; }#}
+{#    .preview-thumbnail.nav-tabs li img {#}
+{#      max-width: 100%;#}
+{#      display: block; }#}
+{#    .preview-thumbnail.nav-tabs li a {#}
+{#      padding: 0;#}
+{#      margin: 0; }#}
+{#    .preview-thumbnail.nav-tabs li:last-of-type {#}
+{#      margin-right: 0; }#}
+{##}
+{#.tab-content {#}
+{#  overflow: hidden; }#}
+{#  .tab-content img {#}
+{#    width: 100%;#}
+{#    -webkit-animation-name: opacity;#}
+{#            animation-name: opacity;#}
+{#    -webkit-animation-duration: .3s;#}
+{#            animation-duration: .3s; }#}
+{##}
+{#.card {#}
+{#  margin-top: 50px;#}
+{#  background: #eee;#}
+{#  padding: 3em;#}
+{#  line-height: 1.5em; }#}
+{##}
+{#@media screen and (min-width: 997px) {#}
+{#  .wrapper {#}
+{#    display: -webkit-box;#}
+{#    display: -webkit-flex;#}
+{#    display: -ms-flexbox;#}
+{#    display: flex; } }#}
+{##}
+{#.details {#}
+{#  display: -webkit-box;#}
+{#  display: -webkit-flex;#}
+{#  display: -ms-flexbox;#}
+{#  display: flex;#}
+{#  -webkit-box-orient: vertical;#}
+{#  -webkit-box-direction: normal;#}
+{#  -webkit-flex-direction: column;#}
+{#      -ms-flex-direction: column;#}
+{#          flex-direction: column; }#}
+{##}
+{#.colors {#}
+{#  -webkit-box-flex: 1;#}
+{#  -webkit-flex-grow: 1;#}
+{#      -ms-flex-positive: 1;#}
+{#          flex-grow: 1; }#}
+{##}
+{#.product-title, .price, .sizes, .colors {#}
+{#  text-transform: UPPERCASE;#}
+{#  font-weight: bold; }#}
+{##}
+{#.checked, .price span {#}
+{#  color: #ff9f1a; }#}
+{##}
+{#.product-title, .rating, .product-description, .price, .vote, .sizes {#}
+{#  margin-bottom: 15px; }#}
+{##}
+{#.product-title {#}
+{#  margin-top: 0; }#}
+{##}
+{#.size {#}
+{#  margin-right: 10px; }#}
+{#  .size:first-of-type {#}
+{#    margin-left: 40px; }#}
+{##}
+{#.color {#}
+{#  display: inline-block;#}
+{#  vertical-align: middle;#}
+{#  margin-right: 10px;#}
+{#  height: 2em;#}
+{#  width: 2em;#}
+{#  border-radius: 2px; }#}
+{#  .color:first-of-type {#}
+{#    margin-left: 20px; }#}
+{##}
+{#.add-to-cart, .like {#}
+{#  background: #ff9f1a;#}
+{#  padding: 1.2em 1.5em;#}
+{#  border: none;#}
+{#  text-transform: UPPERCASE;#}
+{#  font-weight: bold;#}
+{#  color: #fff;#}
+{#  -webkit-transition: background .3s ease;#}
+{#          transition: background .3s ease; }#}
+{#  .add-to-cart:hover, .like:hover {#}
+{#    background: #b36800;#}
+{#    color: #fff; }#}
+{#details > summary {#}
+{#    background-color: #2eb29e;#}
+{#  padding: 4px;#}
+{#  width: 200px;#}
+{#  border: none;#}
+{#  box-shadow: 1px 1px 2px #bbbbbb;#}
+{#  cursor: pointer;#}
+
+{##}
+{#details > p {#}
+{#    background-color: #2eb29e;#}
+{#  padding: 4px;#}
+{#  margin: 0;#}
+{#  box-shadow: 1px 1px 2px #bbbbbb;#}
+
+{#.not-available {#}
+{#  text-align: center;#}
+{#  line-height: 2em; }#}
+{#  .not-available:before {#}
+{#    font-family: fontawesome;#}
+{#    content: "\f00d";#}
+{#    color: #fff; }#}
+{##}
+{#.orange {#}
+{#  background: #ff9f1a; }#}
+{##}
+{#.green {#}
+{#  background: #85ad00; }#}
+{##}
+{#.blue {#}
+{#  background: #0076ad; }#}
+{##}
+{#.tooltip-inner {#}
+{#  padding: 1.3em; }#}
+{##}
+{#@-webkit-keyframes opacity {#}
+{#  0% {#}
+{#    opacity: 0;#}
+{#    -webkit-transform: scale(3);#}
+{#            transform: scale(3); }#}
+{#  100% {#}
+{#    opacity: 1;#}
+{#    -webkit-transform: scale(1);#}
+{#            transform: scale(1); } }#}
+{##}
+{#@keyframes opacity {#}
+{#  0% {#}
+{#    opacity: 0;#}
+{#    -webkit-transform: scale(3);#}
+{#            transform: scale(3); }#}
+{#  100% {#}
+{#    opacity: 1;#}
+{#    -webkit-transform: scale(1);#}
+{#            transform: scale(1); } }#}
+    a {
+        text-decoration :none;
+    }
+
+    .product-viewtag{
+        background-color: red;
+        color: #fff;
+        font-size: 11px;
+        line-height: 1;
+        position: absolute;
+        text-align: center;
+        text-transform: uppercase;
+        top: 22px;
+        margin-left: 17.5rem;
+        padding: 7px 10px;
+        font-weight: 600;
+        min-width: 45px;
+    }
+
+    summary:hover {
+        color: green;
+    }
+                margin: 0 auto;
+            width: 90%;
+        }
+        .main_view{
+            width: 80%;
+            height: 25rem;
+        }
+        .main_view img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .side_view{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .side_view img{
+            width: 9rem;
+            height: 7rem;
+            object-fit: cover;
+            cursor: pointer;
+            margin:0.5rem;
+        }
+{% endblock %}
+{% block content %}
+{#	<div class="container">#}
+{#		<div class="card product_data">#}
+{#			<div class="container-fluid">#}
+{#				<div class="wrapper row">#}
+{#					<div class="preview col-md-6">#}
+{##}
+{#						<div class="preview-pic tab-content">#}
+{#						  <div class="tab-pane active" id="pic-1"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></div>#}
+{#						  <div class="tab-pane" id="pic-2"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></div>#}
+{#						  <div class="tab-pane" id="pic-3"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></div>#}
+{#						  <div class="tab-pane" id="pic-4"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></div>#}
+{#						  <div class="tab-pane" id="pic-5"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></div>#}
+{##}
+{#						<ul class="preview-thumbnail nav nav-tabs">#}
+{#						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></a></li>#}
+{#						  <li><a data-target="#pic-2" data-toggle="tab"><img src="{{ product.image.url}}" alt="{{ product.name }}"/></a></li>#}
+{#						  <li><a data-target="#pic-3" data-toggle="tab"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></a></li>#}
+{#						  <li><a data-target="#pic-4" data-toggle="tab"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></a></li>#}
+{#						  <li><a data-target="#pic-5" data-toggle="tab"><img src="{{ product.image.url}}" alt="{{ product.name }}" /></a></li>#}
+{#						</ul>#}
+{#                    </div>#}
+{#					</div>#}
+{#					<div class="details col-md-6" >#}
+{#						<h3 class="product-title">{{ product.name}}</h3>#}
+{#                    <div>#}
+{#                        {% for cat in product.category.all  %}#}
+{#                        <a style="margin-right:.5rem;display:inline;float:left" href="{{ cat.get_absolute_url }}">{{ cat.name }} /</a>#}
+{#                        {% endfor %}#}
+{##}
+{#                    </div>#}
+{#                        <br>#}
+{#						<div class="rating">#}
+{#							<div class="stars">#}
+{#								<span class="fa fa-star checked"></span>#}
+{#								<span class="fa fa-star checked"></span>#}
+{#								<span class="fa fa-star checked"></span>#}
+{#								<span class="fa fa-star checked"></span>#}
+{#								<span class="fa fa-star checked"></span>#}
+{#							</div>#}
+{#							<span class="review-no">41 reviews</span>#}
+{#						</div>#}
+{#                        <br>#}
+{#                        <h4 class="price"> price:#}
+{#                    {% if product.discount %}#}
+{#                    <del >$ {{ product.price }}</del>#}
+{#                        <ins style="margin:1rem;color: navy" >$ {{ product.final_price }}</ins>#}
+{#                    {% else %}#}
+{#                         <span style="color: #43bd49">${{ product.price }}</span>#}
+{#                    {% endif %}#}
+{#               </h4>#}
+{#                    {% csrf_token %}#}
+{#                        <input type="hidden" value="{{ product.id }}" class="prod_id">#}
+{#                    <label for="Quantity">Quantity</label>#}
+{#                    <div class="input-group text-center mb-3" style="width: 130px;">#}
+{#                        <button class="input-group-text decrement-btn " style="background-color: rgba(0,0,0,0.26);">-</button>#}
+{#                        <input type="text"  class="form-control text-center qty-input " name="quantity" value="1">#}
+{#                        <button class="input-group-text increment-btn" style="background-color: rgba(0,0,0,0.26);" >+</button>#}
+{#                    </div>#}
+{##}
+{##}
+{#						<div class="action">#}
+{#							<button class="add-to-cart btn btn-primary float-left addToCartBtn" style="background-color: blue" type="button">Add to Cart  <span class="fa fa-shopping-cart"></span></button>#}
+{#							<button class="like btn btn-default float-left" type="button" style="background-color: green;margin-left: 2rem"> Add to Wishlist  <span class="fa fa-heart"></span></button>#}
+{#						</div>#}
+{#                    <br> <br>#}
+{#                     <details >#}
+{#                        <summary >details</summary>#}
+{#						<p class="product-description" >{{ product.description|linebreaks }}</p>#}
+{#                    </details>#}
+{#					</div>#}
+{#				</div>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
+{##}
+{#    <script>#}
+{#    var data =1;#}
+{#    document.getElementById("root").innerText = data#}
+{#    function decrement(){#}
+{#        if (data > 1) {#}
+{#            data = data - 1;#}
+{#            document.getElementById("root").innerText=data;#}
+{#        }#}
+{##}
+{#    }#}
+{#    function increment(){#}
+{#        if (data<10) {#}
+{#            data = data + 1;#}
+{#            document.getElementById("root").innerText=data;#}
+{##}
+{#        }#}
+{#    }#}
+{##}
+{#    </script>#}
+{#    #################################################}
+
+    <div class="py-3 bg-primary">
+    <div class="container">
+                {% for cat in product.category.all  %}
+                    <a class="text-white" href="{{ cat.get_absolute_url }}">{{ cat.name }} /</a>
+                {% endfor %}
+                    <a class="text-white" href="{{product.get_absolute_url }}">{{ product.name }} </a>
+    </div>
+    </div>
+
+    <div class="py-5">
+    <div class="container">
+
+            <div class="card shadow product_data">
+              <div class="card-body ">
+                  <div class="row">
+                      <div class="col-md-4">
+                          {% if product.tag %}
+                          <label class="tag product-viewtag">{{ product.tag }}</label>
+                          {% endif %}
+{#                          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100">#}
+                       <div class="main_view">
+            <img src="{{ product.image.url }}" id="main" alt="{{ product.name }}">
+        </div>
+
+        <!-- All images with side view -->
+        <div class="side_view">
+            <img src="{{ product.image.url }}" onclick="change(this.src)" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" onclick="change(this.src)" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" onclick="change(this.src)" alt="{{ product.name }}">
+            <img src="{{ product.image.url }}" onclick="change(this.src)" alt="{{ product.name }}">
+        </div>
+                      </div>
+                  <div class="col-md-8">
+                      <h2 class="mb-0">
+                      {{ product.name }}
+                          {% if product.trending %}
+                          <label style="font-size: 16px; color: white;" class="float-right badge bg-danger  ">Trending</label>
+                          {% endif %}
+                      </h2>
+                  <hr>
+
+                   <h5>
+                    {% if product.discount %}
+                    <h5>Original Price : <del> $ {{ product.price | stringformat:'d'  }}</del></h5>
+                       <h5 style="font-weight: bold">Selling Price : <ins >$ {{ product.final_price| stringformat:'d' }}</ins></h5>
+                    {% else %}
+                         <span>Price : ${{ product.price| stringformat:'d' }}</span>
+                    {% endif %}
+                </h5>
+{#                  <p class="mt-3">#}
+{#                      {{ product.small_description }}#}
+{#                  </p>#}
+                  <hr>
+                  {% if product.quantity > 0 %}
+                  <label class="badge bg-success" style="font-size: 20px;color: white">In stock</label>
+                  {% else %}
+                   <label class="badge bg-danger" style="font-size: 20px;color: white">Out of stock</label>
+                  {% endif %}
+                  <div class="row mt-2">
+                      <div class="col-md-3">
+                          {% csrf_token %}
+                          <input type="hidden" value="{{ product.id }}" class="prod_id">
+                          <label for="Quantity">Quantity</label>
+                          <div class="input-group text-center mb-3" style="width: 130px;">
+                              <button class="input-group-text decrement-btn">-</button>
+                              <input type="text" name="quantity" class="form-control qty-input text-center" value="1">
+                              <button class="input-group-text increment-btn">+</button>
+                          </div>
+                      </div>
+                      <div class="col-md-9">
+                          <br/>
+                          {% if product.quantity > 0 %}
+                          <button type="button" class="btn btn-primary  mt-2 mr-3 float-start addToCartBtn">Add to Cart <i class="fa fa-shopping-cart"></i> </button>
+                          {% endif %}
+                        <buttopn type="button" class="btn btn-success  mt-2  float-start addToWishlist">Add to Wishlist <i class="fa fa-heart"></i> </buttopn>
+                      </div>
+                   <div class="col-md-12">
+                  <hr>
+                  <h3>Description</h3>
+                  <details class="mt-3">
+                        <summary >click here to show</summary>
+						<p class="product-description" >{{ product.description|linebreaks }}</p>
+                    </details>
+
+              </div>
+                  </div>
+
+
+
+                      </div>
+                  </div>
+            
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+        <script type="text/javascript">
+        const change = src => {
+            document.getElementById('main').src = src
+        }
+    </script>
+{% endblock %}

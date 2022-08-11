@@ -1,0 +1,105 @@
+
+    <header class="header_section">
+      <div class="header_top">
+        <div class="container-fluid">
+          <div class="top_nav_container">
+            <div class="contact_nav">
+              <a href="{% url 'products:contact_us' %}">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call : 09376051315
+                </span>
+              </a>
+              <a href="{% url 'products:contact_us' %}">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  Email : Alirezahn1@yahoo.com
+                </span>
+              </a>
+            </div>
+            <form class="search_form" method="post" action="{% url 'orders:searchproduct' %}">
+                {% csrf_token %}
+              <input type="search" required class="form-control" id="searchproducts" name="productsearch" placeholder="Search product">
+              <button class="" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+            <div class="user_option_box">
+                {% if request.user.is_authenticated %}
+                          <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle nav-item active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ request.user }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #248675">
+          <a class="dropdown-item"  href="{% url 'customers:profile' %}">Profile</a>
+          <a class="dropdown-item" href="{% url 'orders:myorders' %}">Orders</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'customers:logout' %}">Logout</a>
+        </div>
+      </div>
+
+
+            {% else %}
+              <a  href="{% url 'customers:login' %}" class="account-link ">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>
+                 Login
+                </span>
+              </a>
+                {% endif %}
+                {% if request.user.is_superuser or request.user.is_staff %}
+                <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin Panel</a>
+                {% endif %}
+              <a href="{% url 'orders:cart' %}" class="cart-link">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <span>
+                  Cart
+                </span>
+              </a>
+                          <a href="{% url 'orders:wishlist' %}" class="cart-link">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                <span>
+                  Whislist
+                </span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="header_bottom">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <h1 class="navbar-brand" href="home.html">
+              <span>
+               SADAF SHOP
+              </span>
+            </h1>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class=""> </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ">
+                <li class="nav-item {% if request.resolver_match.url_name == 'home' %} active{% endif %} ">
+                  <a class="nav-link " id="home" href="{% url 'products:home' %}" >Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'about' %} active{% endif %}">
+                  <a class="nav-link " id="about" href="{% url 'products:about' %}"> About</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'product' %} active{% endif %}">
+                  <a class="nav-link" id="products" href="{% url 'products:product' %}">Products</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'why' %} active{% endif %}">
+                  <a class="nav-link" id="why" href="{% url 'products:why' %}">Why Us</a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == 'contact_us' %} active{% endif %}">
+                  <a class="nav-link" id="contact" href="{% url 'products:contact_us' %}">contact us</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>

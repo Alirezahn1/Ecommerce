@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'images/fevicon.png'%}" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>{% block title %} {% endblock %}</title>
+
+
+  <!-- bootstrap core css -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}" >
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet"> <!-- range slider -->
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css'%}" rel="stylesheet" >
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css'%}" rel="stylesheet" >
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css'%}" rel="stylesheet" >
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>{% block style %}{% endblock %}</style>
+
+    <meta name="referrer" content="no-referrer-when-downgrade">
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+  {% include 'base/navbar.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% include 'base/footer.html' %}
+</div>
+
+  <!-- footer section -->
+  <!-- jQery -->
+  <script src="{% static '/js/jquery-3.4.1.min.js'%}"></script>
+  <script  src="{% static '/js/custom.js'%}"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/62e8defc54f06e12d88c77a7/1g9eqe30g';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+<!--End of Tawk.to Script-->
+  <!-- bootstrap js -->
+      <script src="{% static 'js/bootstrap.js'%}"></script>
+  <!-- custom js -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script>
+      var availableTags = [];
+
+       $.ajax({
+            method : 'GET',
+            url : '/product-list/',
+            success: function (response){
+
+                startauto(response)
+
+            }
+        })
+
+      function startauto(availableTags){
+
+      $( "#searchproducts" ).autocomplete({
+      source: availableTags
+    });
+       }
+  </script>
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+  <script>
+  alertify.set('notifier','position', 'top-right');
+      {% for msg in messages %}
+          alertify.success('{{ msg }}',3);
+      {% endfor %}
+
+
+  </script>
+
+
+
+
+</body>
+
+</html>

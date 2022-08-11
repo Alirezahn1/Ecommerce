@@ -1,0 +1,113 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block style %}.pagination a:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}{% endblock %}
+  <!-- about section -->
+{% block content %}
+
+  <!-- product section -->
+
+  <section class="product_section layout_padding" id="product">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Our Products
+        </h2>
+      </div>
+    <a class="btn btn-primary" href="{% url 'products:product' %} " role="button">All Category</a><br> <br>
+        {% for category in categories %}
+
+        <div class="btn-group">
+            <a href="{{ category.get_absolute_url }}" class="btn btn-primary">{{ category.name }}</a>
+            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">sub</button>
+            <div class="dropdown-menu" >
+                {% for sub in category.scategory.all %}
+                    <a class="dropdown-item" href="{{ sub.get_absolute_url }}">{{ sub.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+     <br> <br><br> <br> <br><br> <br>
+
+
+
+<div class="row cartdata product_data ">
+          {% for product in page_obj %}
+
+        <div class="col-sm-6 col-lg-4 ">
+            {% csrf_token %}
+            <input type="hidden" value="{{ product.id }}" class="prod_id">
+            <input type="hidden" name="quantity" class="form-control qty-input text-center"  value="1">
+          <div class="box" style="background-color: #e8ece8">
+
+            <div class="img-box">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% if product.quantity > 0 %}
+              <button  data-product="{{ product.id }}" data-action="add" class="add_cart_btn update-cart addToCartBtn " >
+                  Add To Cart
+              </button>
+                {% else %}
+                <buttopn type="button" data-action="add" class="btn btn-danger float-start disabled add_cart_btn update-cart ">Out of stock </buttopn>
+                {% endif %}
+            </div>
+            <div class="detail-box">
+               <a  href="{% url 'products:product_detail' product.slug  %}" >
+                  {{ product.name}}
+              </a> <br>
+              <div class="product_info">
+                <h5>
+                    {% if product.discount %}
+                    <del>$ {{ product.price | stringformat:'d' }}</del>
+                        <ins style="margin:1rem;color: #075d1f" >$ {{ product.final_price | stringformat:'d' }}</ins>
+                    {% else %}
+                         <span>${{ product.price | stringformat:'d' }}</span>
+                    {% endif %}
+                </h5>
+                <div class="star_container">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+</div>
+    <br> <br> <br> <br>
+    {% if page_obj.has_other_pages %}
+    <div style="display: table;margin: 0 auto">
+  <ul class="pagination" >
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}" style="color: black;float: left;padding: 8px 16px;text-decoration: none;">&laquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black;float: left;padding: 8px 16px;text-decoration: none;"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in page_obj.paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active" style=";float: left;padding: 8px 16px;text-decoration: none; background-color: #4CAF50;
+    color: white; border-radius: 5px;"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}" style="color: black;float: left; padding: 8px 16px;text-decoration: none;">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}" style="color: black; float: left; padding: 8px 16px;text-decoration: none;">&raquo;</a></li>
+    {% else %}
+      <li class="disabled" style="color: black; float: left; padding: 8px 16px;text-decoration: none"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
+    </div>
+  </section>
+
+  <!-- end product section -->
+
+{% endblock %}
