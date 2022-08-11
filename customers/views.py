@@ -30,7 +30,7 @@ class UserRegisterView(View):
                 return redirect('customers:login')
             else:
                 messages.error(request, 'Please correct the error below.')
-                return redirect('customers:register')
+                return render(request, 'customer/register.html', {'form': form})
     def get(self,request):
         form = UserCreationForm()
         return render(request, 'customer/register.html', {'form': form})
