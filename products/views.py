@@ -17,7 +17,7 @@ class HomeView(View):
 	def get(self,request):
 		products = Product.objects.filter(available=True).exclude(discount=None)
 		new_products= Product.objects.filter(trending=True)
-		paginator = Paginator(products, 6)
+		paginator = Paginator(new_products, 6)
 		page_number = request.GET.get('page')
 		page_obj = paginator.get_page(page_number)
 		return render(request,'base/home.html',{'products': products,'new_products':new_products,'page_obj': page_obj})
